@@ -148,8 +148,8 @@ namespace ITI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("Adress")
-                        .HasColumnType("int");
+                    b.Property<string>("Adress")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Age")
                         .HasColumnType("int");
@@ -165,6 +165,8 @@ namespace ITI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Dep_Id");
 
                     b.ToTable("Student");
                 });
@@ -183,6 +185,22 @@ namespace ITI.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Topic");
+                });
+
+            modelBuilder.Entity("ITI.Table.Student", b =>
+                {
+                    b.HasOne("ITI.Table.Department", "Departments")
+                        .WithMany("Students")
+                        .HasForeignKey("Dep_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Departments");
+                });
+
+            modelBuilder.Entity("ITI.Table.Department", b =>
+                {
+                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

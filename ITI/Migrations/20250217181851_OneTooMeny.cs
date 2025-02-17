@@ -4,7 +4,7 @@
 
 namespace ITI.Migrations
 {
-    public partial class CreateTable : Migration
+    public partial class OneTooMeny : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -86,23 +86,6 @@ namespace ITI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Student",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Fname = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Lname = table.Column<int>(type: "int", nullable: false),
-                    Adress = table.Column<int>(type: "int", nullable: true),
-                    Age = table.Column<int>(type: "int", nullable: true),
-                    Dep_Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Student", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Topic",
                 columns: table => new
                 {
@@ -114,6 +97,34 @@ namespace ITI.Migrations
                 {
                     table.PrimaryKey("PK_Topic", x => x.ID);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Student",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Fname = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Lname = table.Column<int>(type: "int", nullable: false),
+                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Age = table.Column<int>(type: "int", nullable: true),
+                    Dep_Id = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Student", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Student_Departments_Dep_Id",
+                        column: x => x.Dep_Id,
+                        principalTable: "Departments",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Student_Dep_Id",
+                table: "Student",
+                column: "Dep_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -123,9 +134,6 @@ namespace ITI.Migrations
 
             migrationBuilder.DropTable(
                 name: "course_inst");
-
-            migrationBuilder.DropTable(
-                name: "Departments");
 
             migrationBuilder.DropTable(
                 name: "instructor");
@@ -138,6 +146,9 @@ namespace ITI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Topic");
+
+            migrationBuilder.DropTable(
+                name: "Departments");
         }
     }
 }
