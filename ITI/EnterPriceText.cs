@@ -8,20 +8,35 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ITI
 {
-    class EnterPriceText:DbContext
+    class EnterPriceText : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            
-            optionsBuilder.UseSqlServer("Server=.;Database=EnterPriceDB;Integrated Security=True;");
+            modelBuilder.Entity<Student>();
+
+            modelBuilder.Entity<Course>().HasKey(s => s.Id);
+
+            modelBuilder.Entity<Topic>().HasKey(s => s.ID);
+
+            modelBuilder.Entity<Department>();
+
+            modelBuilder.Entity<instructor>().HasKey(s => s.ID);
 
 
+            base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Student> Student { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Server=.;Database=EnterPriceDB;Integrated Security=True;");
+        }
+
+        public DbSet<Student> Students{ get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<Course> Course { get; set; }
+        public DbSet<Course> Courses{ get; set; }
         public DbSet<stud_course> stud_course { get; set; }
         public DbSet<Topic> Topic { get; set; }
 
@@ -30,7 +45,7 @@ namespace ITI
         public DbSet<instructor> instructor { get; set; }
 
 
-     
+
 
 
     }

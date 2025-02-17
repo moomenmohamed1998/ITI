@@ -12,6 +12,6 @@ namespace ITI.Table
         [Key]
         public int inst_ID { get; set; }
         public int course_ID { get; set; }
-        public string  evaluate { get; set; }
+        public string evaluate { get; set; }
     }
 }
