@@ -19,6 +19,7 @@ namespace ITI.Table
 
 
         [ForeignKey("Stud_ID")]
+
         [InverseProperty("Students")]
 
         public Student Students { get; set; }
