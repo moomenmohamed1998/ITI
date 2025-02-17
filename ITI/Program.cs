@@ -8,6 +8,7 @@
             EnterPriceText DBContext = new EnterPriceText();
 
 
+
         }
     }
 }
